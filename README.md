@@ -1,3 +1,5 @@
+![](https://visitor-badge.glitch.me/badge?page_id=adchella-te.eu-migration-tool)
+
 # EU Migration Tool
 ## Table of contents
 * [Executive Summary](#executive-summary)
@@ -12,6 +14,21 @@ With the help of this tool, customers can migrate their tests and other configur
 
 ## Engineering Summary
 ### Current Feature coverage -
+Enterprise and Cloud Agent Tests -
+1. BGP Test : Basic Configuration
+2. Network - Agent-to-server : Basic Configuration
+3. Network - Agent-to-agent : Basic Configuration
+4. DNS - DNS server : Basic Configuration
+5. DNS - DNS trace : Basic Configuration
+6. DNS - DNSSEC : Basic Configuration
+7. Web - HTTP server : Basic Configuration
+8. Web - Page load : Basic Configuration
+9. Web - Transaction : Not Covered
+10. Web - FTP : Not Covered
+11. Voice - RTP : Not Covered
+12. Voice - SIP : Not Covered
+
+Note - Enterprise agent migration not covered. Only cloud agents are migrated currently for all tests. 
 
 ### TechStack:
 * Python3
