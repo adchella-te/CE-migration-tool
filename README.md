@@ -23,10 +23,14 @@ Enterprise and Cloud Agent Tests -
 6. DNS - DNSSEC : Basic Configuration
 7. Web - HTTP server : Basic Configuration
 8. Web - Page load : Basic Configuration
-9. Web - Transaction : Not Covered
-10. Web - FTP : Not Covered
-11. Voice - RTP : Not Covered
-12. Voice - SIP : Not Covered
+9. Web - Transaction : Basic Configuration
+10. Web - FTP : Basic Configuration
+11. Voice - RTP : Basic Configuration
+12. Voice - SIP : Basic Configuration
+
+Endpoint Agent Tests -
+1. Network - Agent-to-server : Basic Configuration
+2. Web - HTTP server : Basic Configuration
 
 Note - Enterprise agent migration not covered. Only cloud agents are migrated currently for all tests. 
 
