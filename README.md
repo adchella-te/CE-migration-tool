@@ -15,8 +15,8 @@ With the help of this tool, customers can migrate their tests and other configur
 ## Engineering Summary
 ### Current Feature coverage -
 Enterprise and Cloud Agent Tests -
-1. BGP Test : Basic Configuration
-2. Network - Agent-to-server : Basic Configuration
+1. BGP Test : Full Configuration *
+2. Network - Agent-to-server : Full Configuration *
 3. Network - Agent-to-agent : Basic Configuration
 4. DNS - DNS server : Basic Configuration
 5. DNS - DNS trace : Basic Configuration
@@ -28,11 +28,17 @@ Enterprise and Cloud Agent Tests -
 11. Voice - RTP : Basic Configuration
 12. Voice - SIP : Basic Configuration
 
+* See Limitations
+
 Endpoint Agent Tests -
 1. Network - Agent-to-server : Basic Configuration
 2. Web - HTTP server : Basic Configuration
 
 Note - Enterprise agent migration not covered. Only cloud agents are migrated currently for all tests. 
+
+*Limitations - 
++ BGP Private monitors migration not covered. Only tests using public monitors can be migrated.
++ Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
 
 ### TechStack:
 * Python3
