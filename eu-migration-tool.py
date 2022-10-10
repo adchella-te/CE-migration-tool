@@ -208,9 +208,9 @@ def create_a2s_test():
 
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'agent-to-server' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=final_payload)
-    pprint(final_payload)
-    print(response.status_code)        
-    
+    if response.status_code != 201:
+        print("Error Code : "+ response.status_code + "\nError Message : " + response.text)
+
 def fetch_test_details():
     payload = {}
     headers = {
