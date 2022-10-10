@@ -28,7 +28,7 @@ Enterprise and Cloud Agent Tests -
 11. Voice - RTP : Basic Configuration
 12. Voice - SIP : Basic Configuration
 
-* See Limitations
+\* See Limitations
 
 Endpoint Agent Tests -
 1. Network - Agent-to-server : Basic Configuration
