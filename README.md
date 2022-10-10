@@ -36,8 +36,9 @@ Endpoint Agent Tests -
 
 Note - Enterprise agent migration not covered. Only cloud agents are migrated currently for all tests. 
 
-*Limitations - 
+### \* Limitations - 
 + BGP Private monitors migration not covered. Only tests using public monitors can be migrated.
++ "agents.sourceIpAddress", "bandwidthMeasurements" and "bgpMonitors" optional features not covered for A2S tests.
 + Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
 
 ### TechStack:
