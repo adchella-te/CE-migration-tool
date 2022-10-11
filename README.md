@@ -17,7 +17,7 @@ With the help of this tool, customers can migrate their tests and other configur
 Enterprise and Cloud Agent Tests -
 1. BGP Test : Full Configuration *
 2. Network - Agent-to-server : Full Configuration *
-3. Network - Agent-to-agent : Basic Configuration
+3. Network - Agent-to-agent : Full Configuration *
 4. DNS - DNS server : Basic Configuration
 5. DNS - DNS trace : Basic Configuration
 6. DNS - DNSSEC : Basic Configuration
@@ -40,8 +40,9 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 1. BGP Private monitors migration not covered. Only tests using public monitors can be migrated.
 2. "agents.sourceIpAddress", "bandwidthMeasurements" and "bgpMonitors" optional features not covered for A2S tests.
 3. Throughput measurement rate selection per protocol not supported for A2A tests.
-4. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
-5. FTP test server credentials have to be re-entered at the time of creation
+4. API support for "PingPayloadSize" parameter (only visible when TCP selected as protocol) is missing for A2A tests.
+5. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
+6. FTP test server credentials have to be re-entered at the time of creation
 
 ### TechStack:
 * Python3
