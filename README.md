@@ -39,8 +39,9 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 ### Limitations - 
 1. BGP Private monitors migration not covered. Only tests using public monitors can be migrated.
 2. "agents.sourceIpAddress", "bandwidthMeasurements" and "bgpMonitors" optional features not covered for A2S tests.
-3. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
-4. FTP test server credentials have to be re-entered at the time of creation
+3. Throughput measurement rate selection per protocol not supported for A2A tests.
+4. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
+5. FTP test server credentials have to be re-entered at the time of creation
 
 ### TechStack:
 * Python3
