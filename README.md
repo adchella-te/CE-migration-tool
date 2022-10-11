@@ -41,8 +41,9 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 2. "agents.sourceIpAddress", "bandwidthMeasurements" and "bgpMonitors" optional features not covered for A2S tests.
 3. Throughput measurement rate selection per protocol not supported for A2A tests.
 4. API support for "PingPayloadSize" parameter (only visible when TCP selected as protocol) is missing for A2A tests.
-5. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
-6. FTP test server credentials have to be re-entered at the time of creation
+5. API support for "Protocol" parameter is missing for DNS Server tests.
+6. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
+7. FTP test server credentials have to be re-entered at the time of creation
 
 ### TechStack:
 * Python3
