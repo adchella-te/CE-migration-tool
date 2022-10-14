@@ -45,6 +45,7 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 6. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
 7. FTP test server credentials have to be re-entered at the time of creation.
 8. DNS Server Test Trasport protocol can be set but not fetched.
+9. API support to fetch proxy settings for HTTP server tests not available.
 
 ### TechStack:
 * Python3
