@@ -18,7 +18,7 @@ Enterprise and Cloud Agent Tests -
 1. BGP Test : Full Configuration *
 2. Network - Agent-to-server : Full Configuration *
 3. Network - Agent-to-agent : Full Configuration *
-4. DNS - DNS server : Basic Configuration
+4. DNS - DNS server : Basic Configuration *
 5. DNS - DNS trace : Basic Configuration
 6. DNS - DNSSEC : Basic Configuration
 7. Web - HTTP server : Basic Configuration
@@ -43,7 +43,8 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 4. API support for "PingPayloadSize" parameter (only visible when TCP selected as protocol) is missing for A2A tests.
 5. API support for "Protocol" parameter is missing for DNS Server tests.
 6. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
-7. FTP test server credentials have to be re-entered at the time of creation
+7. FTP test server credentials have to be re-entered at the time of creation.
+8. DNS Server Test Trasport protocol can be set but not fetched.
 
 ### TechStack:
 * Python3
