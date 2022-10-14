@@ -46,6 +46,7 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 7. FTP test server credentials have to be re-entered at the time of creation.
 8. DNS Server Test Trasport protocol can be set but not fetched.
 9. API support to fetch proxy settings for HTTP server tests not available.
+10. API support to fetch OAuth details for HTTP server tests not available.
 
 ### TechStack:
 * Python3
