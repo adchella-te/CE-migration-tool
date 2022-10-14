@@ -21,7 +21,7 @@ Enterprise and Cloud Agent Tests -
 4. DNS - DNS server : Full Configuration *
 5. DNS - DNS trace : Full Configuration *
 6. DNS - DNSSEC : Full Configuration *
-7. Web - HTTP server : Basic Configuration
+7. Web - HTTP server : Full Configuration *
 8. Web - Page load : Basic Configuration
 9. Web - Transaction : Basic Configuration
 10. Web - FTP : Basic Configuration
