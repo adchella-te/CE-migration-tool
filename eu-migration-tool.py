@@ -24,7 +24,7 @@ def create_bgp_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'bgp' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
     if response.status_code != 201:
-        print("Error Code : "+ response.status_code + "\nError Message : " + response.text)        
+        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))        
 
 def create_rtp_test():
     global headers
@@ -114,12 +114,79 @@ def create_http_test():
     "alertsEnabled": str(fetch_test_details.talertsEnabled),
     "interval": int(fetch_test_details.tinterval),
     "agents": json.loads(fetch_test_details.tagents),
-    "url":  str(fetch_test_details.turl)
+    "url":  str(fetch_test_details.turl),
+    "httpTimeLimit":  str(fetch_test_details.thttpTimeLimit),
+    "httpTargetTime":  str(fetch_test_details.thttpTargetTime), 
+    "networkMeasurements":  str(fetch_test_details.tnetworkMeasurements), 
+    "bandwidthMeasurements":  0, 
+    "mtuMeasurements":  str(fetch_test_details.tmtuMeasurements), 
+    "bgpMeasurements":  str(fetch_test_details.tbgpMeasurements), 
+    "protocol":  str(fetch_test_details.tprotocol), 
+    "probeMode":  str(fetch_test_details.tprobeMode), 
+    "pathTraceMode":  str(fetch_test_details.tpathTraceMode),
+    "ipv6Policy":  str(fetch_test_details.tipv6Policy),
+    "sslVersionId":  str(fetch_test_details.tsslVersionId),
+    "sslVersion":  str(fetch_test_details.tsslVersion),
+    "verifyCertificate":  str(fetch_test_details.tverifyCertificate),
+    "authType": str(fetch_test_details.tauthType),
+    "useNtlm": str(fetch_test_details.tuseNtlm),
+    "httpVersion": str(fetch_test_details.thttpVersion),
+    "followRedirects": str(fetch_test_details.tfollowRedirects),
+    "contentRegex": str(fetch_test_details.tcontentRegex)
     })
+    if fetch_test_details.tfixedPacketRate!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"fixedPacketRate\":" + str(fetch_test_details.tfixedPacketRate) + "}"
+    else:
+        pass
+    if fetch_test_details.tnumPathTraces!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"numPathTraces\":" + str(fetch_test_details.tnumPathTraces) + "}"
+    else:
+        pass
+    if fetch_test_details.tclientCertificate!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"clientCertificate\": \"" + str(fetch_test_details.tclientCertificate) + "\"}"
+    else:
+        pass
+    if fetch_test_details.tusername!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"username\": \"" + str(fetch_test_details.tusername) + "\"}"
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"password\": \"" + str(fetch_test_details.tpassword) + "\"}"
+    else:
+        pass
+    if fetch_test_details.tpostBody!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"postBody\": \"" + str(fetch_test_details.tpostBody) + "\"}"
+    else:
+        pass
+    if fetch_test_details.tuserAgent!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"userAgent\": \"" + str(fetch_test_details.tuserAgent) + "\"}"
+    else:
+        pass
+    if fetch_test_details.tdnsOverride!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"dnsOverride\": \"" + str(fetch_test_details.tdnsOverride) + "\"}"
+    else:
+        pass
+    if fetch_test_details.tdesiredStatusCode!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"desiredStatusCode\": \"" + str(fetch_test_details.tdesiredStatusCode) + "\"}"
+    else:
+        pass
+    if fetch_test_details.tdownloadLimit!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"downloadLimit\": \"" + str(fetch_test_details.tdownloadLimit) + "\"}"
+    else:
+        pass
+    
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'http-server' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)        
-
+    if response.status_code != 201:
+        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
+           
 def create_dnssec_test():
     global headers
     payload = json.dumps({
@@ -132,8 +199,9 @@ def create_dnssec_test():
     })
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-dnssec' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)        
-    
+    if response.status_code != 201:
+        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
+      
 def create_dnstrace_test():
     global headers
     payload = json.dumps({
@@ -142,11 +210,13 @@ def create_dnstrace_test():
     "alertsEnabled": str(fetch_test_details.talertsEnabled),
     "interval": int(fetch_test_details.tinterval),
     "agents": json.loads(fetch_test_details.tagents),
-    "domain":  str(fetch_test_details.tdomain)
+    "domain":  str(fetch_test_details.tdomain),
+    "dnsTransportProtocol":  str(fetch_test_details.tdnsTransportProtocol),
     })
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-trace' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)        
+    if response.status_code != 201:
+        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
     
 def create_dnsserv_test():
     global headers
@@ -157,11 +227,31 @@ def create_dnsserv_test():
     "interval": int(fetch_test_details.tinterval),
     "agents": json.loads(fetch_test_details.tagents),
     "domain":  str(fetch_test_details.tdomain),
-    "dnsServers": fetch_test_details.tdnsServers
+    "dnsServers": fetch_test_details.tdnsServers,
+    "dnsQueryClass":str(fetch_test_details.tdnsQueryClass),
+    "networkMeasurements": int(fetch_test_details.tnetworkMeasurements),
+    "bandwidthMeasurements": 0,
+    "mtuMeasurements": str(fetch_test_details.tmtuMeasurements),
+    "bgpMeasurements": str(fetch_test_details.tbgpMeasurements),
+    "probeMode": str(fetch_test_details.tprobeMode),
+    "ipv6Policy": str(fetch_test_details.tipv6Policy),
+    "dnsTransportProtocol":"UDP",
+    "recursiveQueries":str(fetch_test_details.trecursiveQueries)
     })
+    if fetch_test_details.tnumPathTraces!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"numPathTraces\":" + str(fetch_test_details.tnumPathTraces) + "}"
+    else:
+        pass
+    if fetch_test_details.tfixedPacketRate!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"fixedPacketRate\":" + str(fetch_test_details.tfixedPacketRate) + "}"
+    else:
+        pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-server' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)        
+    if response.status_code != 201:
+        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
 
 def create_a2a_test():
     global headers
@@ -171,11 +261,31 @@ def create_a2a_test():
     "alertsEnabled": str(fetch_test_details.talertsEnabled),
     "interval": int(fetch_test_details.tinterval),
     "agents": json.loads(fetch_test_details.tagents),
-    "targetAgentId":  str(fetch_test_details.ttargetAgentId)
+    "targetAgentId":  str(fetch_test_details.ttargetAgentId),
+    "direction":  str(fetch_test_details.tdirection),
+    "protocol": str(fetch_test_details.tprotocol),
+    "pathTraceMode": str(fetch_test_details.tpathTraceMode),
+    "port": fetch_test_details.tport,
+    "bgpMeasurements": str(fetch_test_details.tbgpMeasurements),
+    "bandwidthMeasurements": 0,
+    "numPathTraces":int(fetch_test_details.tnumPathTraces), 
+    "dscp": str(fetch_test_details.tdscp),
+    "dscpId": str(fetch_test_details.tdscpId),
     })
+    if fetch_test_details.tfixedPacketRate!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"fixedPacketRate\":" + str(fetch_test_details.tfixedPacketRate) + "}"
+    else:
+        pass
+    if fetch_test_details.tmss!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"mss\":" + str(fetch_test_details.tmss) + "}"
+    else:
+        pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'agent-to-agent' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)        
+    if response.status_code != 201:
+        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                    
 
 def create_a2s_test():
     global headers
@@ -189,28 +299,28 @@ def create_a2s_test():
     "port": fetch_test_details.tport,
     "protocol": str(fetch_test_details.tprotocol),
     "probeMode": str(fetch_test_details.tprobeMode),
+    "pingPayloadSize": int(fetch_test_details.tpingPayloadSize),
     "pathTraceMode": str(fetch_test_details.tpathTraceMode),
     "continuousMode": int(fetch_test_details.tcontinuousMode),
     "networkMeasurements": int(fetch_test_details.tnetworkMeasurements),
+    "bandwidthMeasurements": 0,
     "mtuMeasurements": str(fetch_test_details.tmtuMeasurements),
     "bgpMeasurements": str(fetch_test_details.tbgpMeasurements),
-    "pingPayloadSize": int(fetch_test_details.tpingPayloadSize),
     "numPathTraces":int(fetch_test_details.tnumPathTraces), 
     "dscp": str(fetch_test_details.tdscp),
     "dscpId": str(fetch_test_details.tdscpId),
     "ipv6Policy": str(fetch_test_details.tipv6Policy)
     })
     if fetch_test_details.tfixedPacketRate!= 0:
-        final_payload = payload[:-1]
-        final_payload = final_payload + ', ' + "\"fixedPacketRate\":" + str(fetch_test_details.tfixedPacketRate) + "}"
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"fixedPacketRate\":" + str(fetch_test_details.tfixedPacketRate) + "}"
     else:
-        final_payload = payload
-
+        pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'agent-to-server' + "/new.json"
-    response = requests.request("POST", create_tests_url, headers=headers, data=final_payload)
+    response = requests.request("POST", create_tests_url, headers=headers, data=payload)
     if response.status_code != 201:
-        print("Error Code : "+ response.status_code + "\nError Message : " + response.text)
-
+        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))               
+    
 def fetch_test_details():
     payload = {}
     headers = {
@@ -349,6 +459,61 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.turl = tests_data['test'][i]['url']
                 #Optional
+                fetch_test_details.thttpTimeLimit = tests_data['test'][i]['httpTimeLimit']
+                fetch_test_details.thttpTargetTime = tests_data['test'][i]['httpTargetTime']
+                fetch_test_details.tnetworkMeasurements = tests_data['test'][i]['networkMeasurements']
+                fetch_test_details.tmtuMeasurements = tests_data['test'][i]['mtuMeasurements']
+                fetch_test_details.tbgpMeasurements = tests_data['test'][i]['bgpMeasurements']
+                fetch_test_details.tprotocol = tests_data['test'][i]['protocol']
+                fetch_test_details.tprobeMode = tests_data['test'][i]['probeMode']
+                fetch_test_details.tpathTraceMode = tests_data['test'][i]['pathTraceMode']    
+                if('fixedPacketRate' in tests_data['test'][i]):
+                    fetch_test_details.tfixedPacketRate = tests_data['test'][i]['fixedPacketRate']
+                else:
+                    fetch_test_details.tfixedPacketRate = 0
+                if('numPathTraces' in tests_data['test'][i]):
+                    fetch_test_details.tnumPathTraces = tests_data['test'][i]['numPathTraces']
+                else:
+                    fetch_test_details.tnumPathTraces = 0
+                fetch_test_details.tipv6Policy = tests_data['test'][i]['ipv6Policy']
+                fetch_test_details.tsslVersionId = tests_data['test'][i]['sslVersionId']
+                fetch_test_details.tsslVersion = tests_data['test'][i]['sslVersion']
+                fetch_test_details.tverifyCertificate = tests_data['test'][i]['verifyCertificate']
+                if('clientCertificate' in tests_data['test'][i]):
+                    fetch_test_details.tclientCertificate = tests_data['test'][i]['clientCertificate']
+                else:
+                    fetch_test_details.tclientCertificate = 0
+                fetch_test_details.tauthType = tests_data['test'][i]['authType']
+                fetch_test_details.tuseNtlm = tests_data['test'][i]['useNtlm']
+                if('username' in tests_data['test'][i]):
+                    fetch_test_details.tusername = tests_data['test'][i]['username']
+                    fetch_test_details.tpassword = input("Enter the password for HTTP server - " + str(fetch_test_details.turl) + ", with username - " + str(fetch_test_details.tusername) + " : ")
+                else:
+                    fetch_test_details.tusername = 0
+                fetch_test_details.thttpVersion = tests_data['test'][i]['httpVersion']
+                if('postBody' in tests_data['test'][i]):
+                    fetch_test_details.tpostBody = tests_data['test'][i]['postBody']
+                else:
+                    fetch_test_details.tpostBody = 0
+                fetch_test_details.tfollowRedirects = tests_data['test'][i]['followRedirects']
+                if('userAgent' in tests_data['test'][i]):
+                    fetch_test_details.tuserAgent = tests_data['test'][i]['userAgent']
+                else:
+                    fetch_test_details.tuserAgent = 0
+                if('dnsOverride' in tests_data['test'][i]):
+                    fetch_test_details.tdnsOverride = tests_data['test'][i]['dnsOverride']
+                else:
+                    fetch_test_details.tdnsOverride = 0
+                if('desiredStatusCode' in tests_data['test'][i]):
+                    fetch_test_details.tdesiredStatusCode = tests_data['test'][i]['desiredStatusCode']
+                else:
+                    fetch_test_details.tdesiredStatusCode = 0
+                if('downloadLimit' in tests_data['test'][i]):
+                    fetch_test_details.tdownloadLimit = tests_data['test'][i]['downloadLimit']
+                else:
+                    fetch_test_details.tdownloadLimit = 0
+                fetch_test_details.tcontentRegex = tests_data['test'][i]['contentRegex']
+
                 create_http_test()
             except Exception as e:
                 print("Error migrating HTTP Server tests: " +  str(e))        
@@ -385,6 +550,7 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.tdomain = tests_data['test'][i]['domain']
                 #Optional
+                fetch_test_details.tdnsTransportProtocol = tests_data['test'][i]['dnsTransportProtocol']
                 create_dnstrace_test()
             except Exception as e:
                 print("Error migrating DNS Trace tests: " +  str(e))
@@ -404,6 +570,22 @@ def fetch_test_details():
                 fetch_test_details.tdomain = tests_data['test'][i]['domain']
                 fetch_test_details.tdnsServers = tests_data['test'][i]['dnsServers']
                 #Optional
+                fetch_test_details.tdnsQueryClass = tests_data['test'][i]['dnsQueryClass']
+                fetch_test_details.tnetworkMeasurements = tests_data['test'][i]['networkMeasurements']
+                fetch_test_details.tmtuMeasurements = tests_data['test'][i]['mtuMeasurements']
+                fetch_test_details.tbgpMeasurements = tests_data['test'][i]['bgpMeasurements']
+                fetch_test_details.tprobeMode = tests_data['test'][i]['probeMode']
+                fetch_test_details.tpathTraceMode = tests_data['test'][i]['pathTraceMode']    
+                if('fixedPacketRate' in tests_data['test'][i]):
+                    fetch_test_details.tfixedPacketRate = tests_data['test'][i]['fixedPacketRate']
+                else:
+                    fetch_test_details.tfixedPacketRate = 0
+                fetch_test_details.trecursiveQueries = tests_data['test'][i]['recursiveQueries']
+                if('numPathTraces' in tests_data['test'][i]):
+                    fetch_test_details.tnumPathTraces = tests_data['test'][i]['numPathTraces']
+                else:
+                    fetch_test_details.tnumPathTraces = 0            
+                fetch_test_details.tipv6Policy = tests_data['test'][i]['ipv6Policy']
                 create_dnsserv_test()
             except Exception as e:
                 print("Error migrating DNS Server tests: " +  str(e))
@@ -422,6 +604,22 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.ttargetAgentId = tests_data['test'][i]['targetAgentId']
                 #Optional
+                fetch_test_details.tdirection = tests_data['test'][i]['direction']
+                fetch_test_details.tprotocol = tests_data['test'][i]['protocol']
+                fetch_test_details.tpathTraceMode = tests_data['test'][i]['pathTraceMode']    
+                fetch_test_details.tport = tests_data['test'][i]['port']
+                if('mss' in tests_data['test'][i]):
+                    fetch_test_details.tmss = tests_data['test'][i]['mss']
+                else:
+                    fetch_test_details.tmss = 0
+                fetch_test_details.tbgpMeasurements = tests_data['test'][i]['bgpMeasurements']
+                if('fixedPacketRate' in tests_data['test'][i]):
+                    fetch_test_details.tfixedPacketRate = tests_data['test'][i]['fixedPacketRate']
+                else:
+                    fetch_test_details.tfixedPacketRate = 0
+                fetch_test_details.tnumPathTraces = tests_data['test'][i]['numPathTraces']
+                fetch_test_details.tdscp = tests_data['test'][i]['dscp']
+                fetch_test_details.tdscpId = tests_data['test'][i]['dscpId']
                 create_a2a_test()
             except Exception as e:
                 print("Error migrating Agent to Agent tests: " +  str(e))
@@ -462,7 +660,7 @@ def fetch_test_details():
                 fetch_test_details.tipv6Policy = tests_data['test'][i]['ipv6Policy']
                 create_a2s_test()
             except Exception as e:
-                print("Error migrating Agent to Server tests: " +  str(e))
+                print("Error migrating Agent to Server tests: " + str(e) + ". Check if only enterprise agents are assigned to this test.")
 
 
 def create_epa_a2s_test():
