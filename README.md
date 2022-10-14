@@ -18,7 +18,7 @@ Enterprise and Cloud Agent Tests -
 1. BGP Test : Full Configuration *
 2. Network - Agent-to-server : Full Configuration *
 3. Network - Agent-to-agent : Full Configuration *
-4. DNS - DNS server : Basic Configuration *
+4. DNS - DNS server : Full Configuration *
 5. DNS - DNS trace : Basic Configuration
 6. DNS - DNSSEC : Basic Configuration
 7. Web - HTTP server : Basic Configuration
