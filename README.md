@@ -20,7 +20,7 @@ Enterprise and Cloud Agent Tests -
 3. Network - Agent-to-agent : Full Configuration *
 4. DNS - DNS server : Full Configuration *
 5. DNS - DNS trace : Full Configuration *
-6. DNS - DNSSEC : Basic Configuration
+6. DNS - DNSSEC : Full Configuration *
 7. Web - HTTP server : Basic Configuration
 8. Web - Page load : Basic Configuration
 9. Web - Transaction : Basic Configuration
