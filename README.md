@@ -48,6 +48,7 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 9. API support to fetch proxy settings for HTTP server tests not available.
 10. API support to fetch OAuth details for HTTP server tests not available.
 11. Migration for Custom Headers field pending
+12. API support for device emulation not available
 
 ### TechStack:
 * Python3
