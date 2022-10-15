@@ -47,8 +47,8 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 8. DNS Server Test Trasport protocol can be set but not fetched.
 9. API support to fetch proxy settings for HTTP server tests not available.
 10. API support to fetch OAuth details for HTTP server tests not available.
-11. Migration for Custom Headers field pending
-12. API support for device emulation not available
+11. Migration for Custom Headers field pending for HTTP and Pageload tests.
+12. API support for device emulation not available.
 
 ### TechStack:
 * Python3
