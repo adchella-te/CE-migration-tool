@@ -25,7 +25,7 @@ Enterprise and Cloud Agent Tests -
 8. Web - Page load : Full Configuration *
 9. Web - Transaction : Basic Configuration *
 10. Web - FTP : Full Configuration *
-11. Voice - RTP : Basic Configuration
+11. Voice - RTP : Full Configuration *
 12. Voice - SIP : Basic Configuration
 
 \* See Limitations
