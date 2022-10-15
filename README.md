@@ -23,7 +23,7 @@ Enterprise and Cloud Agent Tests -
 6. DNS - DNSSEC : Full Configuration *
 7. Web - HTTP server : Full Configuration *
 8. Web - Page load : Full Configuration *
-9. Web - Transaction : Basic Configuration
+9. Web - Transaction : Basic Configuration *
 10. Web - FTP : Basic Configuration
 11. Voice - RTP : Basic Configuration
 12. Voice - SIP : Basic Configuration
@@ -47,7 +47,7 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 8. DNS Server Test Trasport protocol can be set but not fetched.
 9. API support to fetch proxy settings for HTTP server tests not available.
 10. API support to fetch OAuth details for HTTP server tests not available.
-11. Migration for Custom Headers field pending for HTTP and Pageload tests.
+11. Migration for Custom Headers field pending for HTTP, Page-load and Transaction tests.
 12. API support for device emulation not available.
 
 ### TechStack:
