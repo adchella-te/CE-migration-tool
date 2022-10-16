@@ -1,6 +1,25 @@
 import requests
 import json
 from pprint import pprint
+import logging
+
+logger = logging.getLogger('migrationlogs')
+logger.setLevel(logging.DEBUG)
+
+#logs to be sent to log file
+fh = logging.FileHandler('te-migration.log')
+fh.setLevel(logging.DEBUG)
+
+#logs to be sent to console
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+
+logger.addHandler(fh)
+logger.addHandler(ch)
+
+formatter = logging.Formatter('%(asctime)s.%(msecs)03d %(levelname)s [%(thread)d] {} %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+fh.setFormatter(formatter)
+ch.setFormatter(formatter)
 
 auth_bearer1 = input("Enter Account Token 1: ")
 auth_bearer2 = input("Enter Account Token 2: ")
@@ -21,11 +40,15 @@ def create_bgp_test():
     "includeCoveredPrefixes": int(fetch_test_details.tincludeCoveredPrefixes),
     "usePublicBgp": int(fetch_test_details.tusePublicBgp)
     })
-    create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'bgp' + "/new.json"
-    response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))        
 
+    create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'bgp' + "/new.json"
+    logger.info('Creating bgp test - '+ str(fetch_test_details.tname))
+    response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('BGP test named \"'+ str(fetch_test_details.tname) + '\" created')
+
+    if response.status_code != 201:
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+        
 def create_rtp_test():
     global headers
     payload = json.dumps({
@@ -47,9 +70,12 @@ def create_rtp_test():
     "dscpId": str(fetch_test_details.tdscpId)
     })
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'voice' + "/new.json"
+    logger.info('Creating voice test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Voice test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))        
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
     
 def create_sip_test():
     global headers
@@ -135,9 +161,13 @@ def create_ftp_test():
     else:
         pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'ftp-server' + "/new.json"
+
+    logger.info('Creating ftp test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('FTP test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))         
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
 
 def create_transaction_test():
     global headers
@@ -205,9 +235,12 @@ def create_transaction_test():
     else:
         pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'web-transactions' + "/new.json"
+    logger.info('Creating transaction test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Transaction test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))      
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
 
 def create_page_test():
     global headers
@@ -275,9 +308,11 @@ def create_page_test():
         pass
     
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'page-load' + "/new.json"
+    logger.info('Creating page load test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Page load test named \"'+ str(fetch_test_details.tname) + '\" created')
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))             
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
 
 def create_http_test():
     global headers
@@ -356,9 +391,12 @@ def create_http_test():
         pass
     
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'http-server' + "/new.json"
+    logger.info('Creating http server test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('HTTP server test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
            
 def create_dnssec_test():
     global headers
@@ -371,9 +409,12 @@ def create_dnssec_test():
     "domain":  str(fetch_test_details.tdomain)
     })
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-dnssec' + "/new.json"
+    logger.info('Creating dnssec test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Dnssec test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
       
 def create_dnstrace_test():
     global headers
@@ -387,9 +428,12 @@ def create_dnstrace_test():
     "dnsTransportProtocol":  str(fetch_test_details.tdnsTransportProtocol),
     })
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-trace' + "/new.json"
+    logger.info('Creating dns trace test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Dns trace test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
     
 def create_dnsserv_test():
     global headers
@@ -422,9 +466,12 @@ def create_dnsserv_test():
     else:
         pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-server' + "/new.json"
+    logger.info('Creating dnsserv test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Dnsserv test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                     
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
 
 def create_a2a_test():
     global headers
@@ -456,9 +503,12 @@ def create_a2a_test():
     else:
         pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'agent-to-agent' + "/new.json"
+    logger.info('Creating agent-to-agent test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Agent-to-agent test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))                    
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
 
 def create_a2s_test():
     global headers
@@ -490,19 +540,23 @@ def create_a2s_test():
     else:
         pass
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'agent-to-server' + "/new.json"
+    logger.info('Creating agent-to-server test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
+    logger.info('Agent-to-server test named \"'+ str(fetch_test_details.tname) + '\" created')
+
     if response.status_code != 201:
-        print("Error Code : "+ str(response.status_code) + "\nError Message : " + str(response.text))               
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
     
 def fetch_test_details():
     payload = {}
     headers = {
     'Authorization': 'Bearer ' + str(auth_bearer1)
     }
+    logger.info('Fetching all tests from source account group')
     fetch_tests_url = "https://api.thousandeyes.com/v6/tests.json"
     fetch_tests_response = requests.request("GET", fetch_tests_url, headers=headers, data=payload)
     tests_data = json.loads(fetch_tests_response.text)
-
+    logger.info('Tests fetch completed')
     for i in range(0,len(tests_data['test'])):
         fetch_test_details.tname = tests_data['test'][i]['testName']
         if('description' in tests_data['test'][i]):
@@ -514,17 +568,21 @@ def fetch_test_details():
         if str(tests_data['test'][i]['type']) == 'bgp':
             try:
                 #Required
+                logger.debug('Fetching Required parameters for bgp test')
                 fetch_test_details.tprefix = tests_data['test'][i]['prefix']
                 #Optional
+                logger.debug('Fetching Optional parameters for bgp test')
                 fetch_test_details.tincludeCoveredPrefixes = tests_data['test'][i]['includeCoveredPrefixes']
                 fetch_test_details.tusePublicBgp = tests_data['test'][i]['usePublicBgp']
-                #create_bgp_test()
+                logger.info('About to create new bgp test')
+                create_bgp_test()
             except Exception as e:
-                print("Error migrating BGP tests: " +  str(e))
+                logger.error('Error migrating bgp test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
         
         if str(tests_data['test'][i]['type']) == 'voice':
             try:
-                #Required    
+                #Required
+                logger.debug('Fetching required parameters for voice test')    
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -536,6 +594,7 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.ttargetAgentId = tests_data['test'][i]['targetAgentId']
                 #Optional
+                logger.debug('Fetching optional parameters for voice test')
                 fetch_test_details.tserver = tests_data['test'][i]['server']
                 fetch_test_details.tcodec = tests_data['test'][i]['codec']
                 fetch_test_details.tcodecId = tests_data['test'][i]['codecId']
@@ -546,14 +605,16 @@ def fetch_test_details():
                 fetch_test_details.tnumPathTraces = tests_data['test'][i]['numPathTraces']
                 fetch_test_details.tdscp = tests_data['test'][i]['dscp']
                 fetch_test_details.tdscpId = tests_data['test'][i]['dscpId']
-
-                create_rtp_test()
+                logger.info('About to create new voice test')
+                #create_rtp_test()
             except Exception as e:
-                print("Error migrating RTP tests: " +  str(e))
-            
+                logger.error('Error migrating voice test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
+
+                            
         if str(tests_data['test'][i]['type']) == 'sip-server':
             try:
                 #Required    
+                logger.debug('Fetching Required parameters for sip test')
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -567,13 +628,16 @@ def fetch_test_details():
                 fetch_test_details.tport = tests_data['test'][i]['port']
                 fetch_test_details.tprotocol = tests_data['test'][i]['protocol']
                 #Optional
+                logger.debug('Fetching optional parameters for sip test')
+                logger.info('About to create new sip test')
                 create_sip_test()
             except Exception as e:
-                print("Error migrating SIP tests: " +  str(e))        
+                logger.error('Error migrating sip test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
 
         if str(tests_data['test'][i]['type']) == 'ftp-server':
             try:
                 #Required    
+                logger.debug('Fetching required parameters for ftp test')
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -587,6 +651,7 @@ def fetch_test_details():
                 fetch_test_details.trequestType = tests_data['test'][i]['requestType']
                 fetch_test_details.tusername = tests_data['test'][i]['username']
                 #Optional
+                logger.debug('Fetching optional parameters for ftp test')
                 if('downloadLimit' in tests_data['test'][i]):
                     fetch_test_details.tdownloadLimit = tests_data['test'][i]['downloadLimit']
                 else:
@@ -628,13 +693,15 @@ def fetch_test_details():
                 else:
                     fetch_test_details.tdesiredReplyCode = 0
                 fetch_test_details.tipv6Policy = tests_data['test'][i]['ipv6Policy']
+                logger.info('About to create new ftp test')
                 create_ftp_test()
             except Exception as e:
-                print("Error migrating FTP tests: " +  str(e))        
+                logger.error('Error migrating ftp test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
 
         if str(tests_data['test'][i]['type']) == 'web-transactions':
             try:
-                #Required  
+                #Required
+                logger.debug('Fetching required parameters for transaction test')  
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -647,6 +714,7 @@ def fetch_test_details():
                 fetch_test_details.turl = tests_data['test'][i]['url']
                 fetch_test_details.ttransactionScript = tests_data['test'][i]['transactionScript']
                 #Optional
+                logger.debug('Fetching optional parameters for transaction test')
                 if('subinterval' in tests_data['test'][i]):
                     fetch_test_details.tsubinterval = tests_data['test'][i]['subinterval']
                 else:
@@ -692,14 +760,15 @@ def fetch_test_details():
                     fetch_test_details.tdesiredStatusCode = 0
                 fetch_test_details.tcontentRegex = tests_data['test'][i]['contentRegex']
                 fetch_test_details.tincludeHeaders = tests_data['test'][i]['includeHeaders']
-
+                logger.info('About to create new transaction test')
                 create_transaction_test()
             except Exception as e:
-                print("Error migrating Transaction tests: " +  str(e))        
+                logger.error('Error migrating transaction test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
 
         if str(tests_data['test'][i]['type']) == 'page-load':
             try:
                 #Required  
+                logger.debug('Fetching required parameters for page-load test')
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -712,6 +781,7 @@ def fetch_test_details():
                 fetch_test_details.turl = tests_data['test'][i]['url']
                 fetch_test_details.thttpInterval = tests_data['test'][i]['httpInterval']
                 #Optional
+                logger.debug('Fetching optional parameters for page-load test')
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 if('subinterval' in tests_data['test'][i]):
                     fetch_test_details.tsubinterval = tests_data['test'][i]['subinterval']
@@ -758,14 +828,16 @@ def fetch_test_details():
                     fetch_test_details.tdesiredStatusCode = 0
                 fetch_test_details.tcontentRegex = tests_data['test'][i]['contentRegex']
                 fetch_test_details.tincludeHeaders = tests_data['test'][i]['includeHeaders']
+                logger.info('About to create new pageload test')
                 create_page_test()
                 
             except Exception as e:
-                print("Error migrating Page Load tests: " +  str(e))        
+                logger.error('Error migrating pageload test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
         
         if str(tests_data['test'][i]['type']) == 'http-server':
             try:
-                #Required  
+                #Required
+                logger.debug('Fetching required parameters for http-server test')  
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -777,6 +849,7 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.turl = tests_data['test'][i]['url']
                 #Optional
+                logger.debug('Fetching optional parameters for http-server test')
                 fetch_test_details.thttpTimeLimit = tests_data['test'][i]['httpTimeLimit']
                 fetch_test_details.thttpTargetTime = tests_data['test'][i]['httpTargetTime']
                 fetch_test_details.tnetworkMeasurements = tests_data['test'][i]['networkMeasurements']
@@ -831,14 +904,15 @@ def fetch_test_details():
                 else:
                     fetch_test_details.tdownloadLimit = 0
                 fetch_test_details.tcontentRegex = tests_data['test'][i]['contentRegex']
-
+                logger.info('About to create new http server test')
                 create_http_test()
             except Exception as e:
-                print("Error migrating HTTP Server tests: " +  str(e))        
+                logger.error('Error migrating http server test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
 
         if str(tests_data['test'][i]['type']) == 'dns-dnssec':
             try:
-                #Required  
+                #Required
+                logger.debug('Fetching required parameters for dnssec test')  
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -850,13 +924,15 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.tdomain = tests_data['test'][i]['domain']
                 #Optional
+                logger.info('About to create new dnssec test')
                 create_dnssec_test()
             except Exception as e:
-                print("Error migrating DNSSEC tests: " +  str(e)) 
+                logger.error('Error migrating dnssec test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
 
         if str(tests_data['test'][i]['type']) == 'dns-trace':
             try:
-                #Required  
+                #Required
+                logger.debug('Fetching required parameters for dns-trace test')  
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -868,14 +944,17 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.tdomain = tests_data['test'][i]['domain']
                 #Optional
+                logger.debug('Fetching optional parameters for dns-trace test')
                 fetch_test_details.tdnsTransportProtocol = tests_data['test'][i]['dnsTransportProtocol']
+                logger.info('About to create new dnstrace test')
                 create_dnstrace_test()
             except Exception as e:
-                print("Error migrating DNS Trace tests: " +  str(e))
+                logger.error('Error migrating dns trace test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
 
         if str(tests_data['test'][i]['type']) == 'dns-server':
             try:
-                #Required  
+                #Required
+                logger.debug('Fetching required parameters for dnsserv test')  
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -888,6 +967,7 @@ def fetch_test_details():
                 fetch_test_details.tdomain = tests_data['test'][i]['domain']
                 fetch_test_details.tdnsServers = tests_data['test'][i]['dnsServers']
                 #Optional
+                logger.debug('Fetching optional parameters for dnsserv test')
                 fetch_test_details.tdnsQueryClass = tests_data['test'][i]['dnsQueryClass']
                 fetch_test_details.tnetworkMeasurements = tests_data['test'][i]['networkMeasurements']
                 fetch_test_details.tmtuMeasurements = tests_data['test'][i]['mtuMeasurements']
@@ -904,13 +984,15 @@ def fetch_test_details():
                 else:
                     fetch_test_details.tnumPathTraces = 0            
                 fetch_test_details.tipv6Policy = tests_data['test'][i]['ipv6Policy']
+                logger.info('About to create new dnsserv test')
                 create_dnsserv_test()
             except Exception as e:
-                print("Error migrating DNS Server tests: " +  str(e))
+                logger.error('Error migrating dnsserv test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
         
         if str(tests_data['test'][i]['type']) == 'agent-to-agent':
             try:
-                #Required  
+                #Required
+                logger.debug('Fetching required parameters for agent-to-agent test')  
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -922,6 +1004,7 @@ def fetch_test_details():
                 fetch_test_details.tagents = fetch_test_details.tagents[:-1] + ']'
                 fetch_test_details.ttargetAgentId = tests_data['test'][i]['targetAgentId']
                 #Optional
+                logger.debug('Fetching optional parameters for agent-to-agent test')
                 fetch_test_details.tdirection = tests_data['test'][i]['direction']
                 fetch_test_details.tprotocol = tests_data['test'][i]['protocol']
                 fetch_test_details.tpathTraceMode = tests_data['test'][i]['pathTraceMode']    
@@ -938,13 +1021,15 @@ def fetch_test_details():
                 fetch_test_details.tnumPathTraces = tests_data['test'][i]['numPathTraces']
                 fetch_test_details.tdscp = tests_data['test'][i]['dscp']
                 fetch_test_details.tdscpId = tests_data['test'][i]['dscpId']
+                logger.info('About to create new agent-to-agent test')
                 create_a2a_test()
             except Exception as e:
-                print("Error migrating Agent to Agent tests: " +  str(e))
+                logger.error('Error migrating agent-to-agent test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
 
         if str(tests_data['test'][i]['type']) == 'agent-to-server':
             try:
-                #Required  
+                #Required
+                logger.debug('Fetching required parameters for agent-to-server test')  
                 fetch_test_details.tinterval = tests_data['test'][i]['interval']
                 fetch_test_details.tagents = "["
                 fetch_agent_details_url = "https://api.thousandeyes.com/v6/tests/" + str(tests_data['test'][i]['testId']) + ".json"
@@ -960,6 +1045,7 @@ def fetch_test_details():
                 else:
                     fetch_test_details.tport = None
                 #Optional
+                logger.debug('Fetching optional parameters for agent-to-server test')
                 fetch_test_details.tprotocol = tests_data['test'][i]['protocol']    
                 fetch_test_details.tprobeMode = tests_data['test'][i]['probeMode']
                 fetch_test_details.tpathTraceMode = tests_data['test'][i]['pathTraceMode']    
@@ -976,9 +1062,10 @@ def fetch_test_details():
                 fetch_test_details.tdscp = tests_data['test'][i]['dscp']
                 fetch_test_details.tdscpId = tests_data['test'][i]['dscpId']
                 fetch_test_details.tipv6Policy = tests_data['test'][i]['ipv6Policy']
+                logger.info('About to create new agent-to-server test')
                 create_a2s_test()
             except Exception as e:
-                print("Error migrating Agent to Server tests: " + str(e) + ". Check if only enterprise agents are assigned to this test.")
+                logger.error('Error migrating agent-to-server test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\". Check if only enterprise agents assigned')
 
 
 def create_epa_a2s_test():
