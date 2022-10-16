@@ -6,11 +6,11 @@ import logging
 logger = logging.getLogger('migrationlogs')
 logger.setLevel(logging.DEBUG)
 
-#logs to be sent to log file
+#logs to be sent to te-migration.log
 fh = logging.FileHandler('te-migration.log')
 fh.setLevel(logging.DEBUG)
 
-#logs to be sent to console
+#logs to be viewed in console
 ch = logging.StreamHandler()
 ch.setLevel(logging.ERROR)
 
