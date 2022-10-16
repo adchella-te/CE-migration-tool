@@ -6,11 +6,11 @@ import logging
 logger = logging.getLogger('migrationlogs')
 logger.setLevel(logging.DEBUG)
 
-#logs to be sent to te-migration.log
+#logs to be sent to log file
 fh = logging.FileHandler('te-migration.log')
 fh.setLevel(logging.DEBUG)
 
-#logs to be viewed in console
+#logs to be sent to console
 ch = logging.StreamHandler()
 ch.setLevel(logging.ERROR)
 
@@ -44,11 +44,13 @@ def create_bgp_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'bgp' + "/new.json"
     logger.info('Creating bgp test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('BGP test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('BGP test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
-        
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
+
 def create_rtp_test():
     global headers
     payload = json.dumps({
@@ -72,10 +74,12 @@ def create_rtp_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'voice' + "/new.json"
     logger.info('Creating voice test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Voice test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('Voice test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
     
 def create_sip_test():
     global headers
@@ -85,16 +89,56 @@ def create_sip_test():
     "alertsEnabled": str(fetch_test_details.talertsEnabled),
     "interval": int(fetch_test_details.tinterval),
     "agents": json.loads(fetch_test_details.tagents),
-    "targetSipCredentials": {
-        "sipRegistrar":  str(fetch_test_details.tsipRegistrar),
-            "port": str(fetch_test_details.tport),
-            "protocol": str(fetch_test_details.tprotocol)
-        }
+    "sipTimeLimit": str(fetch_test_details.tsipTimeLimit),
+    "tsipTargetTime": str(fetch_test_details.tsipTargetTime),
+    "networkMeasurements":  str(fetch_test_details.tnetworkMeasurements), 
+    "bandwidthMeasurements":  0,
+    "mtuMeasurements":  str(fetch_test_details.tmtuMeasurements), 
+    "bgpMeasurements":  str(fetch_test_details.tbgpMeasurements),
+    "pathTraceMode":  str(fetch_test_details.tpathTraceMode),
+    "registerEnabled": str(fetch_test_details.tregisterEnabled),
+    "ipv6Policy":  str(fetch_test_details.tipv6Policy)
     })
+    if fetch_test_details.tfixedPacketRate!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"fixedPacketRate\":" + str(fetch_test_details.tfixedPacketRate) + "}"
+    else:
+        pass
+    if fetch_test_details.tnumPathTraces!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"numPathTraces\":" + str(fetch_test_details.tnumPathTraces) + "}"
+    else:
+        pass
+    if fetch_test_details.toptionsRegex!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"optionsRegex\": \"" + str(fetch_test_details.toptionsRegex) + "\"}"
+    else:
+        pass
+    payload = payload[:-1]
+    payload = payload + ', ' + '\"targetSipCredentials\": { \"sipRegistrar\": \"' + str(fetch_test_details.tsipRegistrar) + '\", \"port\": ' + str(fetch_test_details.tport) + ', \"protocol\": \"' + str(fetch_test_details.tprotocol) + '\"}}'
+    if fetch_test_details.tuser!= 0:
+        payload = payload[:-2]
+        payload = payload + ', ' + "\"user\": \"" + str(fetch_test_details.tuser) + "\"}"
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"password\": \"" + str(fetch_test_details.tpassword) + "\"}}"
+    else:
+        pass
+    if fetch_test_details.tauthUser!= 0:
+        payload = payload[:-2]
+        payload = payload + ', ' + "\"authUser\": \"" + str(fetch_test_details.tauthUser) + "\"}}"
+    else:
+        pass
+    
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'sip-server' + "/new.json"
+    logger.info('Creating sip test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)        
+    logger.debug('SIP test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
+    if response.status_code != 201:
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))   
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
+        
 def create_ftp_test():
     global headers
     fetch_test_details.tpassword = input("Enter the password for FTP server - " + fetch_test_details.turl + ": ")
@@ -117,7 +161,7 @@ def create_ftp_test():
     "protocol":  str(fetch_test_details.tprotocol), 
     "probeMode":  str(fetch_test_details.tprobeMode), 
     "pathTraceMode":  str(fetch_test_details.tpathTraceMode),
-    "ipv6Policy":  str(fetch_test_details.tipv6Policy),
+    "ipv6Policy":  str(fetch_test_details.tipv6Policy)
     })
     if fetch_test_details.tdownloadLimit!= 0:
         payload = payload[:-1]
@@ -164,10 +208,12 @@ def create_ftp_test():
 
     logger.info('Creating ftp test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('FTP test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('FTP test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
 
 def create_transaction_test():
     global headers
@@ -237,10 +283,12 @@ def create_transaction_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'web-transactions' + "/new.json"
     logger.info('Creating transaction test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Transaction test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('Transaction test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
 
 def create_page_test():
     global headers
@@ -310,9 +358,11 @@ def create_page_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'page-load' + "/new.json"
     logger.info('Creating page load test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Page load test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('Page load test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
 
 def create_http_test():
     global headers
@@ -393,10 +443,12 @@ def create_http_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'http-server' + "/new.json"
     logger.info('Creating http server test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('HTTP server test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('HTTP server test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
            
 def create_dnssec_test():
     global headers
@@ -411,10 +463,12 @@ def create_dnssec_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-dnssec' + "/new.json"
     logger.info('Creating dnssec test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Dnssec test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('DNSSEC test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
       
 def create_dnstrace_test():
     global headers
@@ -430,10 +484,12 @@ def create_dnstrace_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-trace' + "/new.json"
     logger.info('Creating dns trace test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Dns trace test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('DNS trace test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
     
 def create_dnsserv_test():
     global headers
@@ -468,10 +524,12 @@ def create_dnsserv_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'dns-server' + "/new.json"
     logger.info('Creating dnsserv test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Dnsserv test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('DNSserv test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
 
 def create_a2a_test():
     global headers
@@ -505,10 +563,12 @@ def create_a2a_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'agent-to-agent' + "/new.json"
     logger.info('Creating agent-to-agent test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Agent-to-agent test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('Agent-to-agent test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
 
 def create_a2s_test():
     global headers
@@ -542,10 +602,12 @@ def create_a2s_test():
     create_tests_url = "https://api.thousandeyes.com/v6/tests/" + 'agent-to-server' + "/new.json"
     logger.info('Creating agent-to-server test - '+ str(fetch_test_details.tname))
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    logger.info('Agent-to-server test named \"'+ str(fetch_test_details.tname) + '\" created')
+    logger.debug('Agent-to-server test named \"'+ str(fetch_test_details.tname) + '\" create request sent')
 
     if response.status_code != 201:
         logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_test_details.tname) + '\" has been created')
     
 def fetch_test_details():
     payload = {}
@@ -606,10 +668,9 @@ def fetch_test_details():
                 fetch_test_details.tdscp = tests_data['test'][i]['dscp']
                 fetch_test_details.tdscpId = tests_data['test'][i]['dscpId']
                 logger.info('About to create new voice test')
-                #create_rtp_test()
+                create_rtp_test()
             except Exception as e:
                 logger.error('Error migrating voice test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\"')
-
                             
         if str(tests_data['test'][i]['type']) == 'sip-server':
             try:
@@ -628,6 +689,37 @@ def fetch_test_details():
                 fetch_test_details.tport = tests_data['test'][i]['port']
                 fetch_test_details.tprotocol = tests_data['test'][i]['protocol']
                 #Optional
+                fetch_test_details.tprobeMode = tests_data['test'][i]['probeMode']
+                fetch_test_details.tpathTraceMode = tests_data['test'][i]['pathTraceMode']
+                fetch_test_details.tsipProxy = tests_data['test'][i]['sipProxy']
+                fetch_test_details.tsipTimeLimit = tests_data['test'][i]['sipTimeLimit']  
+                fetch_test_details.tsipTargetTime = tests_data['test'][i]['sipTargetTime']  
+                fetch_test_details.tnetworkMeasurements = tests_data['test'][i]['networkMeasurements']
+                fetch_test_details.tmtuMeasurements = tests_data['test'][i]['mtuMeasurements']
+                fetch_test_details.tbgpMeasurements = tests_data['test'][i]['bgpMeasurements']
+                if('fixedPacketRate' in tests_data['test'][i]):
+                    fetch_test_details.tfixedPacketRate = tests_data['test'][i]['fixedPacketRate']
+                else:
+                    fetch_test_details.tfixedPacketRate = 0
+                if('numPathTraces' in tests_data['test'][i]):
+                    fetch_test_details.tnumPathTraces = tests_data['test'][i]['numPathTraces']
+                else:
+                    fetch_test_details.tnumPathTraces = 0
+                fetch_test_details.tregisterEnabled = tests_data['test'][i]['registerEnabled']
+                if('user' in tests_data['test'][i]):
+                    fetch_test_details.tuser = tests_data['test'][i]['user']
+                    fetch_test_details.tpassword = input("Enter the password for SIP server - " + str(fetch_test_details.tsipRegistrar) + ", with username - " + str(fetch_test_details.tuser) + " : ")
+                else:
+                    fetch_test_details.tuser = 0
+                if('authUser' in tests_data['test'][i]):
+                    fetch_test_details.tauthUser = tests_data['test'][i]['authUser']
+                else:
+                    fetch_test_details.tauthUser = 0  
+                if('optionsRegex' in tests_data['test'][i]):
+                    fetch_test_details.toptionsRegex = tests_data['test'][i]['optionsRegex']
+                else:
+                    fetch_test_details.toptionsRegex = 0
+                fetch_test_details.tipv6Policy = tests_data['test'][i]['ipv6Policy']                               
                 logger.debug('Fetching optional parameters for sip test')
                 logger.info('About to create new sip test')
                 create_sip_test()
