@@ -48,8 +48,8 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 9. API support to fetch proxy settings and OAuth details for HTTP server tests not available.
 10. Migration for Custom Headers field pending for HTTP, Page-load and Transaction tests.
 11. API support for device emulation not available.
-12. API support to fetch Server Type and Desired Status Code fields not available.
+12. API support to fetch Server Type and Desired Status Code fields not available. API support to push SIP-Proxy configuration unavailable.
 
 ### TechStack:
-* Python3
+* Python3.8.9
 * ThousandEyes Dev APIv6	
