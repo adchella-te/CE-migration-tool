@@ -26,7 +26,7 @@ Enterprise and Cloud Agent Tests -
 9. Web - Transaction : Basic Configuration *
 10. Web - FTP : Full Configuration *
 11. Voice - RTP : Full Configuration *
-12. Voice - SIP : Basic Configuration
+12. Voice - SIP : Full Configuration *
 
 \* See Limitations
 
@@ -45,10 +45,10 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 6. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
 7. FTP test server credentials have to be re-entered at the time of creation.
 8. DNS Server Test Trasport protocol can be set but not fetched.
-9. API support to fetch proxy settings for HTTP server tests not available.
-10. API support to fetch OAuth details for HTTP server tests not available.
-11. Migration for Custom Headers field pending for HTTP, Page-load and Transaction tests.
-12. API support for device emulation not available.
+9. API support to fetch proxy settings and OAuth details for HTTP server tests not available.
+10. Migration for Custom Headers field pending for HTTP, Page-load and Transaction tests.
+11. API support for device emulation not available.
+12. API support to fetch Server Type and Desired Status Code fields not available.
 
 ### TechStack:
 * Python3
