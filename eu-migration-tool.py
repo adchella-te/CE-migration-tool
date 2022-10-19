@@ -1159,7 +1159,7 @@ def fetch_test_details():
             except Exception as e:
                 logger.error('Error migrating agent-to-server test - ' +  str(e) + ' when creating \"' + str(fetch_test_details.tname) + '\". Check if only enterprise agents assigned')
 
-
+                
 def create_epa_a2s_test():
     global headers
     payload = json.dumps({
@@ -1168,11 +1168,26 @@ def create_epa_a2s_test():
     "interval": int(fetch_epa_test_details.tinterval),
     "maxMachines": int(fetch_epa_test_details.tmaxMachines),
     "agentSelectorType":  str(fetch_epa_test_details.tagentSelectorType),
-    "serverName": str(fetch_epa_test_details.tserver)
+    "serverName": str(fetch_epa_test_details.tserver),
+    "networkProtocol": str(fetch_epa_test_details.tprotocol),
+    "port": str(fetch_epa_test_details.tport),
+    "pathtraceInSession": bool(fetch_epa_test_details.tpathtraceInSession),
+    "networkMeasurements": int(fetch_epa_test_details.tnetworkMeasurements),
+    "bandwidthMeasurements": int(fetch_epa_test_details.tnetworkMeasurements),
+    "mtuMeasurements": int(fetch_epa_test_details.tmtuMeasurements),
+    "bgpMeasurements": int(fetch_epa_test_details.tbgpMeasurements),
     })
+    if fetch_epa_test_details.ttcpProbeMode!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"tcpProbeMode\":\"" + str(fetch_epa_test_details.ttcpProbeMode) + "\"}"
+    else:
+        pass
     create_tests_url = "https://api.thousandeyes.com/v6/endpoint-tests/" + 'agent-to-server' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)        
+    if response.status_code != 201:
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_epa_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+    else:
+        logger.info('Test \"' + str(fetch_epa_test_details.tname) + '\" has been created')
     
 def create_epa_http_test():
     global headers
@@ -1183,14 +1198,58 @@ def create_epa_http_test():
     "maxMachines": int(fetch_epa_test_details.tmaxMachines),
     "agentSelectorType":  str(fetch_epa_test_details.tagentSelectorType),
     "url":  str(fetch_epa_test_details.tserver),
+    "targetResponseTime": int(fetch_epa_test_details.thttpTargetTime),
+    "httpTimeLimit": int(fetch_epa_test_details.thttpTimeLimit),
+    "httpVersion": str(fetch_epa_test_details.thttpVersion),
+    "networkProtocol": str(fetch_epa_test_details.tprotocol),
+    "port": str(fetch_epa_test_details.tport),
+    "pathtraceInSession": bool(fetch_epa_test_details.tpathtraceInSession),
+    "networkMeasurements": int(fetch_epa_test_details.tnetworkMeasurements),
+    "bandwidthMeasurements": int(fetch_epa_test_details.tnetworkMeasurements),
+    "mtuMeasurements": int(fetch_epa_test_details.tmtuMeasurements),
+    "bgpMeasurements": int(fetch_epa_test_details.tbgpMeasurements),
+    "sslVersion": str(fetch_epa_test_details.tsslVersion),
+    "sslVersionId": str(fetch_epa_test_details.tsslVersionId),
     "verifyCertHostname": bool(fetch_epa_test_details.tverifyCertHostname),
-    "sslVersion": int(fetch_epa_test_details.tsslVersion),
-    "targetResponseTime": int(fetch_epa_test_details.ttargetResponseTime),
-    "httpTimeLimit": int(fetch_epa_test_details.thttpTimeLimit)
+    "authType": str(fetch_epa_test_details.tauthType),
+    "useNtlm": int(fetch_epa_test_details.tuseNtlm),
+    "followRedirects": int(fetch_epa_test_details.tfollowRedirects),
     })
+    if fetch_epa_test_details.ttcpProbeMode!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"tcpProbeMode\":\"" + str(fetch_epa_test_details.ttcpProbeMode) + "\"}"
+    else:
+        pass
+    if fetch_epa_test_details.tusername!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"username\":\"" + str(fetch_epa_test_details.tusername) + "\"}"
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"password\":\"" + str(fetch_epa_test_details.tpassword) + "\"}"
+    else:
+        pass
+    if fetch_epa_test_details.tpostBody!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"postBody\":\"" + str(fetch_epa_test_details.tpostBody) + "\"}"
+    else:
+        pass
+    if fetch_epa_test_details.tuserAgent!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"userAgent\":\"" + str(fetch_epa_test_details.tuserAgent) + "\"}"
+    else:
+        pass
+    if fetch_epa_test_details.tcontentRegex!= 0:
+        payload = payload[:-1]
+        payload = payload + ', ' + "\"contentRegex\":\"" + str(fetch_epa_test_details.tcontentRegex) + "\"}"
+    else:
+        pass
     create_tests_url = "https://api.thousandeyes.com/v6/endpoint-tests/" + 'http-server' + "/new.json"
     response = requests.request("POST", create_tests_url, headers=headers, data=payload)
-    print(response.status_code)
+    if response.status_code != 201:
+        logger.error('Exited with error code : '+ str(response.status_code) + ' when creating \"' + str(fetch_epa_test_details.tname) + '\"'+ '; Error Message : ' + str(response.text))
+        pprint(payload)
+    else:
+        logger.info('Test \"' + str(fetch_epa_test_details.tname) + '\" has been created')
+
      
 def fetch_epa_test_details():
     payload = {}
@@ -1211,14 +1270,61 @@ def fetch_epa_test_details():
         fetch_epa_test_details.talertsEnabled = epa_tests_data['endpointTest'][i]['alertsEnabled']
         
         if str(epa_tests_data['endpointTest'][i]['type']) == 'agent-to-server':
+            #Optional Parameters
+            fetch_epa_test_details.tprotocol = epa_tests_data['endpointTest'][i]['protocol']
+            fetch_epa_test_details.tport = epa_tests_data['endpointTest'][i]['port']
+            if('tcpProbeMode' in epa_tests_data['endpointTest'][i]):
+                fetch_epa_test_details.ttcpProbeMode = epa_tests_data['endpointTest'][i]['tcpProbeMode']
+            else:
+                fetch_epa_test_details.ttcpProbeMode = 0
+            fetch_epa_test_details.tpathtraceInSession = epa_tests_data['endpointTest'][i]['pathtraceInSession']
+            fetch_epa_test_details.tnetworkMeasurements = epa_tests_data['endpointTest'][i]['networkMeasurements']
+            fetch_epa_test_details.tmtuMeasurements = epa_tests_data['endpointTest'][i]['mtuMeasurements']
+            fetch_epa_test_details.tbgpMeasurements = epa_tests_data['endpointTest'][i]['bgpMeasurements']            
+            fetch_epa_test_details.tbandwidthMeasurements = epa_tests_data['endpointTest'][i]['bandwidthMeasurements']            
             create_epa_a2s_test()
         
         if  str(epa_tests_data['endpointTest'][i]['type']) == 'http-server':
+            #Required Configurations
+            if('tcpProbeMode' in epa_tests_data['endpointTest'][i]):
+                fetch_epa_test_details.ttcpProbeMode = epa_tests_data['endpointTest'][i]['tcpProbeMode']
+            else:
+                fetch_epa_test_details.ttcpProbeMode = 0
+            fetch_epa_test_details.tprotocol = epa_tests_data['endpointTest'][i]['protocol']
+            fetch_epa_test_details.tpathtraceInSession = epa_tests_data['endpointTest'][i]['pathtraceInSession']
+            fetch_epa_test_details.thttpTargetTime = epa_tests_data['endpointTest'][i]['httpTargetTime']
+            fetch_epa_test_details.thttpTimeLimit = epa_tests_data['endpointTest'][i]['httpTimeLimit']
+            #Optional Configurations
+            fetch_epa_test_details.thttpVersion = epa_tests_data['endpointTest'][i]['httpVersion']
+            fetch_epa_test_details.tnetworkMeasurements = epa_tests_data['endpointTest'][i]['networkMeasurements']
+            fetch_epa_test_details.tmtuMeasurements = epa_tests_data['endpointTest'][i]['mtuMeasurements']
+            fetch_epa_test_details.tbgpMeasurements = epa_tests_data['endpointTest'][i]['bgpMeasurements']            
+            fetch_epa_test_details.tbandwidthMeasurements = epa_tests_data['endpointTest'][i]['bandwidthMeasurements'] 
+            fetch_epa_test_details.tauthType = epa_tests_data['endpointTest'][i]['authType']
+            fetch_epa_test_details.tuseNtlm = epa_tests_data['endpointTest'][i]['useNtlm']
+            if(epa_tests_data['endpointTest'][i]['username'] != ""):
+                fetch_epa_test_details.tusername = epa_tests_data['endpointTest'][i]['username']
+                fetch_epa_test_details.tpassword = input("Enter the password for HTTP server - " + str(fetch_epa_test_details.tserver) + ", with username - " + str(fetch_epa_test_details.tusername) + " : ")
+            else:
+                fetch_epa_test_details.tusername = 0
+            if('postBody' in epa_tests_data['endpointTest'][i]):
+                fetch_epa_test_details.tpostBody = epa_tests_data['endpointTest'][i]['postBody']
+            else:
+                fetch_epa_test_details.tpostBody = 0
+            fetch_epa_test_details.tfollowRedirects = epa_tests_data['endpointTest'][i]['followRedirects']
+            fetch_epa_test_details.tsslVersionId = epa_tests_data['endpointTest'][i]['sslVersionId']
             fetch_epa_test_details.tverifyCertHostname = epa_tests_data['endpointTest'][i]['verifyCertificate']
             fetch_epa_test_details.tsslVersion = epa_tests_data['endpointTest'][i]['sslVersionId']
-            fetch_epa_test_details.ttargetResponseTime = epa_tests_data['endpointTest'][i]['httpTargetTime']
-            fetch_epa_test_details.thttpTimeLimit = epa_tests_data['endpointTest'][i]['httpTimeLimit']        
+            if('userAgent' in epa_tests_data['endpointTest'][i]):
+                fetch_epa_test_details.tuserAgent = epa_tests_data['endpointTest'][i]['userAgent']
+            else:
+                fetch_epa_test_details.tuserAgent = 0
+            if('contentRegex' in epa_tests_data['endpointTest'][i]):
+                fetch_epa_test_details.tcontentRegex = epa_tests_data['endpointTest'][i]['contentRegex']
+            else:
+                fetch_epa_test_details.tcontentRegex = 0
             create_epa_http_test()
+
 
 def main():
     fetch_test_details()
