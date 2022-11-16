@@ -53,3 +53,13 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 ### TechStack:
 * Python3.8.9
 * ThousandEyes Dev APIv6	
+
+## Instructions to Run the Script
+
+Install the Required Python Libraries :
+
+    $ pip3 install -r requirements.txt
+
+Run the main script :
+    
+    $ python3 eu-migration-tool.py
