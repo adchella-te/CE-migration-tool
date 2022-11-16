@@ -2,6 +2,13 @@
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
 
+Inclusive Language tools
+
+Copyright (c) 2022, Cisco Systems, Inc. and/or its affiliates
+
+This project includes software developed at Cisco Systems, Inc. and/or its affiliates.
+   
+   
    TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
    1. Definitions.
