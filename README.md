@@ -1,4 +1,5 @@
-![](https://visitor-badge.glitch.me/badge?page_id=adchella-te.eu-migration-tool)
+![](https://visitor-badge.glitch.me/badge?page_id=adchella-te.eu-migration-tool) 
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/adchella-te/EU-migration-tool)
 
 # EU Migration Tool
 ## Table of contents
