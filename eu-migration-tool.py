@@ -36,8 +36,8 @@ formatter = logging.Formatter('%(asctime)s.%(msecs)03d %(levelname)s [%(thread)d
 fh.setFormatter(formatter)
 ch.setFormatter(formatter)
 
-auth_bearer1 = input("Enter Account Token 1: ")
-auth_bearer2 = input("Enter Account Token 2: ")
+auth_bearer1 = input("Enter Source Account OAuth Bearer Token : ")
+auth_bearer2 = input("Enter Destination Account OAuth Bearer Token : ")
 
 headers = {
     'Content-Type': 'application/json',
