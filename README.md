@@ -1,6 +1,11 @@
 ![](https://visitor-badge.glitch.me/badge?page_id=adchella-te.eu-migration-tool) 
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/adchella-te/EU-migration-tool)
 
+# Latest Release Notes - EUM release 2.0
+1. Ability to move a subset of tests (e.g only BGP and HTTP server tests)
+2. Ability to move tests from AG in same organisation to another AG in the same organization
+3. Better and more robust error handling
+
 # EU Migration Tool
 ## Table of contents
 * [Executive Summary](#executive-summary)
