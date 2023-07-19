@@ -46,7 +46,7 @@ print("\t\tEnter the OAuth Bearer Token for the Source and Destination")
 print("======================================================================================================\n")
 
 while True:
-    auth_bearer1 = input("Enter Source Organization's OAuth Bearer Token : ")
+    auth_bearer1 = input("Enter Source Organization's OAuth Bearer Token : ").strip().replace(" ","")
     headers1 = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -61,7 +61,7 @@ while True:
         continue
     
 while True:
-    auth_bearer2 = input("Enter Destination Organization's OAuth Bearer Token : ")
+    auth_bearer2 = input("Enter Destination Organization's OAuth Bearer Token : ").strip().replace(" ","")
     headers2 = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
