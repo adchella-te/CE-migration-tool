@@ -46,7 +46,9 @@ print("\t\tEnter the OAuth Bearer Token for the Source and Destination")
 print("======================================================================================================\n")
 
 while True:
-    auth_bearer1 = input("Enter Source Organization's OAuth Bearer Token : ").strip().replace(" ","")
+    auth_bearer1 = input("Enter Source Organization's OAuth Bearer Token : ").strip().replace(" ","") #Trailing, leading and intra whitespaces removed
+    auth_bearer1 = ''.join(char for char in auth_bearer1 if char.isalnum()) #Special charachters removed
+        
     headers1 = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -54,14 +56,18 @@ while True:
     }  
     payload={}  
     fetch_org1_response = requests.request("GET", url, headers=headers1, data=payload)
+    
     if(fetch_org1_response.status_code==200):
         break
     else:
         print("Please enter a valid OAuth Bearer Token")
         continue
     
+    
 while True:
-    auth_bearer2 = input("Enter Destination Organization's OAuth Bearer Token : ").strip().replace(" ","")
+    auth_bearer2 = input("Enter Destination Organization's OAuth Bearer Token : ").strip().replace(" ","") #Trailing, leading and intra whitespaces removed
+    auth_bearer2 = ''.join(char for char in auth_bearer2 if char.isalnum()) #Special charachters removed
+    
     headers2 = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -69,6 +75,8 @@ while True:
     } 
     payload={}  
     fetch_org2_response = requests.request("GET", url, headers=headers2, data=payload)
+
+    
     if(fetch_org2_response.status_code==200):
         break
     else:
