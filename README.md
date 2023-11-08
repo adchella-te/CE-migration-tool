@@ -10,17 +10,17 @@
 # CE Migration Tool
 ## Table of contents
 * [Executive Summary](#executive-summary)
-* [Engineering/Product Summary](#engineering-summary)
+* [Engineering/Product Summary](#usage-summary)
 
 ## Executive Summary
 ### What problem does this tool solve?
-ThousandEyes announced general availability for EU-multi-region cloud support on 16th-August-2022. The primary goal being to enable our customers to address any regulatory concerns they have that require SaaS or Cloud services to be based in the EU. With this launch it can be expected that some of our EMEA customers would wish to move their existing test settings from the US data-center to the EU data-center. This project was created to solve for this problem however it has since evolved to meet the configuration migration needs for general ThousandEyes operations. 
+ThousandEyes announced the option to create the ThousandEyes controller tenents hosted on the newly launched EU DC on 16th-August-2022, with the goal of enabling customers in EMEA to meet required SaaS/Cloud services regulations. With this launch a lot of our EMEA customers wished to move their existing test settings from the US DC to the EU DC. This project was created to solve for this problem and it has since evolved to meet the configuration migration needs for general ThousandEyes operations. 
 
 ### How does it solve the problem?
-Automation for migrating tests and other configuration from the one ThousandEyes region to the other
-Automation for migrating tests (or subset of tests) from one account group to the other 
+Automated migration of tests and other configuration from the one ThousandEyes region to the other
+Automated migration of tests (or subset of tests) from one account group to the other 
 
-## Engineering Summary
+## Usage Summary
 ### Current Feature coverage -
 Enterprise and Cloud Agent Tests -
 1. BGP Test : Full Configuration *
@@ -71,3 +71,6 @@ Install the Required Python Libraries :
 Run the main script :
     
     $ python3 eu-migration-tool.py
+
+### Disclaimer:
+This project is an open source initiative licensed under the MIT License, encouraging collaboration and development within the community. Users are free to use, modify, and distribute the software in accordance with the terms specified in the MIT License. For major services related to this project, users are advised to contact the ThousandEyes account team or email support@thousandeyes.com for assistance. Please note that this project and its maintainers are not directly affiliated with ThousandEyes platform, and any support provided by ThousandEyes is subject to their own terms and conditions.
