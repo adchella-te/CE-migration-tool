@@ -1,6 +1,6 @@
-![](https://visitor-badge.glitch.me/badge?page_id=adchella-te.eu-migration-tool) 
 [![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/adchella-te/EU-migration-tool)
 [![Run in Cisco Cloud IDE](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-runable-icon.svg)](https://developer.cisco.com/codeexchange/devenv/adchella-te/EU-migration-tool/)
+![](https://visitor-badge.glitch.me/badge?page_id=adchella-te.eu-migration-too)
 
 # Latest Release Notes - CEM release 2.0
 1. Ability to move a subset of tests (e.g only BGP and HTTP server tests)
