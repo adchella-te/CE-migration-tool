@@ -70,7 +70,7 @@ Install the Required Python Libraries :
 
 Run the main script :
     
-    $ python3 eu-migration-tool.py
+    $ python3 eu-migration-release-2.py
 
 ### Disclaimer:
 This project is an open source initiative licensed under the MIT License, encouraging collaboration and development within the community. Users are free to use, modify, and distribute the software in accordance with the terms specified in the MIT License. For major services related to this project, users are advised to contact the ThousandEyes account team or email support@thousandeyes.com for assistance. Please note that this project and its maintainers are not directly affiliated with ThousandEyes platform, and any support provided by ThousandEyes is subject to their own terms and conditions.
