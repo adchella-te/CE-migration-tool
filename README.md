@@ -14,7 +14,7 @@
 
 ## Executive Summary
 ### What problem does this tool solve?
-ThousandEyes announced the option to create the ThousandEyes controller tenents hosted on the newly launched EU DC on 16th-August-2022, with the goal of enabling customers in EMEA to meet required SaaS/Cloud services regulations. With this launch a lot of our EMEA customers wished to move their existing test settings from the US DC to the EU DC. This project was created to solve for this problem and it has since evolved to meet the configuration migration needs for general ThousandEyes operations. 
+ThousandEyes announced the option to create the ThousandEyes controller tenents hosted on the newly launched EU DC on 16th-August-2022, with the goal of enabling customers in EMEA to meet required SaaS/Cloud services regulations. The launch of this new DC in the EU region, saw a lot of our EMEA customers wishing to move their existing test settings from the US DC to the EU DC. This project was created to solve for this problem and it has since evolved to meet the configuration migration needs for general ThousandEyes operations. 
 
 ### How does it solve the problem?
 Automated migration of tests and other configuration from the one ThousandEyes region to the other
