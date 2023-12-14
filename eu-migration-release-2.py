@@ -47,7 +47,7 @@ print("=========================================================================
 
 while True:
     auth_bearer1 = input("Enter Source Organization's OAuth Bearer Token : ").strip().replace(" ","") #Trailing, leading and intra whitespaces removed
-    auth_bearer1 = ''.join(char for char in auth_bearer1 if char.isalnum()) #Special charachters removed
+    auth_bearer1 = ''.join(char for char in auth_bearer1 if char.isalnum() or char == "-") #Special charachters removed
         
     headers1 = {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ while True:
     
 while True:
     auth_bearer2 = input("Enter Destination Organization's OAuth Bearer Token : ").strip().replace(" ","") #Trailing, leading and intra whitespaces removed
-    auth_bearer2 = ''.join(char for char in auth_bearer2 if char.isalnum()) #Special charachters removed
+    auth_bearer2 = ''.join(char for char in auth_bearer2 if char.isalnum() or char == "-") #Special charachters removed
     
     headers2 = {
         'Content-Type': 'application/json',
