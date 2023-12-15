@@ -53,10 +53,10 @@ Note - Enterprise agent migration not covered. Only cloud agents are migrated cu
 6. Bandwidth measurement option cannot be selected or migrated as it can only be done for enterprise agent which are not migrated.
 7. FTP test server credentials have to be re-entered at the time of creation.
 8. DNS Server Test Trasport protocol can be set but not fetched.
-9. API support to fetch proxy settings and OAuth details for HTTP server tests not available.
+9. API support to fetch proxy settings and OAuth details for HTTP server tests not available and API support for device emulation not available.
 10. Migration for Custom Headers field pending for HTTP, Page-load and Transaction tests.
-11. API support for device emulation not available.
-12. API support to fetch Server Type and Desired Status Code fields not available. API support to push SIP-Proxy configuration unavailable.
+11. A API support to fetch Server Type and Desired Status Code fields not available. API support to push SIP-Proxy configuration unavailable.
+12. Agent assignment for all migrate EPA will be All tests by default
 
 ### TechStack:
 * Python3.8.9
